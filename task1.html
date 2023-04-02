@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css"> 
+</head>
+<body>
+    <div class="container">
+    <h1>Задача 1. Описати масив об’єктів – сайтів розроблених компанією з такими властивостями
+----- Властивості ------
+назва компанії на час розробки (назву періодично змінюють)
+власник компанії
+споснсори (масив спонсорів)
+             * прізвище спонсора
+      * ім’я  спонсора
+      * сума вкладень спонсора
+рік випуску
+вартість сайту
+Знайти:
+
+    </h1>
+    <a href="./index.html">Повернутись до задач</a>
+ <script>
+let siteList=[
+  {
+    title:'site1',
+    owner:'firstOwner',
+    sponsors:[
+      {
+        surname:'Smith',
+        name:'John',
+        investment:100000
+      },
+      {
+        surname:'Jones',
+        name:'Bridget',
+        investment:50000,
+      },
+      {
+        surname:'Williams',
+        name:'Serene',
+        investment:10000,
+      }
+    ],
+    yearOfRelease:2000,
+    worthOfSite:7500,
+  },
+  {
+    title:'site2',
+    owner:'secondOwner',
+    sponsors:[
+     
+      {
+        surname:'Brown',
+        name:'Ryan',
+        investment:30000,
+      },
+      {
+        surname:'Harris',
+        name:'Natalie',
+        investment:11000,
+      }
+    ],
+    yearOfRelease:2010,
+    worthOfSite:550000,
+  },
+  {
+    title:'site3',
+    owner:'thirdOwner',
+    sponsors:[
+      {
+        surname:'Thompson',
+        name:'Grace',
+        investment:1000
+      },
+      {
+        surname:'Clark',
+        name:'Jacob',
+        investment:300000,
+      },
+      {
+        surname:'Lewis',
+        name:'Colin',
+        investment:12000,
+      }
+    ],
+    yearOfRelease:2007,
+    worthOfSite:950000,
+  },
+]
+//1) загальну вартість усіх сайтів
+let res = siteList.reduce((prevSum,site)=>prevSum+=site.worthOfSite,
+0
+)
+document.write(`1)Загальна вартість усіх сайтів :${res}<br>`)
+//2) кількість сайтів, що було зроблено між 2000 та 2009 рр.
+let quantity = siteList.reduce((prevSum,site)=>
+site.yearOfRelease>=2000&&site.yearOfRelease<2009
+?prevSum+1
+:prevSum,
+0
+)
+document.write(`2)Загальна кількість усіх сайтів з 2000 по 2009 рік становить :${quantity}<br>`)
+//) кількість сайтів, де сума спонсорських вкладень була більшою за 100000
+let siteInvestments = siteList.reduce((prevSum,site)=>{
+if(site.sponsors.reduce((prevValue2,sponsors)=>prevValue2 + sponsors.investment,0) > 100000)
+return prevSum+1
+return prevSum},
+0
+)
+document.write(`3)Загальна кількість усіх сайтів зі спонсорськими вкладеннями більшими за 100000 становить :${siteInvestments}<br>`)
+//4) створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив)
+const arrayOfSponsors=[]
+for (const list of siteList){
+  for(const sponsors of list.sponsors){
+    arrayOfSponsors.push(`${sponsors.surname} ${sponsors.name}`)
+  }
+
+}
+document.write(`4)Загальний список спонсорів  :${arrayOfSponsors}<br>`)
+//5) знайти рік, коли прибуток був найбільшим
+const yearBiggestWorth=getYearBiggestWorth(siteList)
+function getYearBiggestWorth(siteList){
+  let max =-Infinity
+  let maxWorth
+  for(const worth of siteList){
+    if (worth.worthOfSite>max){
+      max=worth.worthOfSite
+      maxWorth=worth.yearOfRelease
+    }
+  }
+  return maxWorth
+}
+document.write(`5)Рік, коли прибуток був найбільшим ${yearBiggestWorth}<br>`)
+
+//6) упорядкувати список за спаданням прибутку
+const byDeclineList= siteList.sort((el1,el2)=>el2.worthOfSite - el1.worthOfSite)
+
+console.log(byDeclineList)
+//7) Створити 2 окремих списки з копіями об’єктів, що містять сайти  вартістю до 10000 і більше 10000
+let newSiteList1=[]
+for ( let i=0;i<siteList.length;i++)
+if( siteList[i].worthOfSite<10000){
+  newSiteList1.push(siteList[i])
+}
+console.log(newSiteList1)
+let newSiteList2=[]
+for ( let i=0;i<siteList.length;i++)
+if( siteList[i].worthOfSite>10000){
+  newSiteList2.push(siteList[i])
+}
+console.log(newSiteList2)
+ </script>
+     
+   
+</body>
+</html>
