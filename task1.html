@@ -140,6 +140,23 @@ const byDeclineList= siteList.sort((el1,el2)=>el2.worthOfSite - el1.worthOfSite)
 
 console.log(byDeclineList)
 //7) Створити 2 окремих списки з копіями об’єктів, що містять сайти  вартістю до 10000 і більше 10000
+     //1 варіант
+function getSortedListByCost(list) {
+			let listGreater10000 = []
+			let listLess10000 = []
+			for (const company of list) {
+				if (company.worthOfSite > 10000) listGreater10000.push((JSON.parse(JSON.stringify(company))))
+				else listLess10000.push((JSON.parse(JSON.stringify(company))))
+			}
+			return { listGreater10000, listLess10000 }
+		}
+
+		const listByCost = getSortedListByCost(siteList)
+		const companyListGreater10000 = listByCost.listGreater10000
+		console.log(companyListGreater10000)
+		const companyListLess10000 = listByCost.listLess10000
+		console.log(companyListLess10000)
+     //2 варіант 
 let newSiteList1=[]
 for ( let i=0;i<siteList.length;i++)
 if( siteList[i].worthOfSite<10000){
